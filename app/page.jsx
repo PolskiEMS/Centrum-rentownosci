@@ -1,9 +1,5 @@
-import CentrumRentownosciPanel from "../components/dashboard/CentrumRentownosciPanel";
+import AuthPanel from "../components/auth/AuthPanel";
 
 export default function HomePage() {
-  return (
-    <main className="app-shell">
-      <CentrumRentownosciPanel />
-    </main>
-  );
+  return <AuthPanel />;
 }
