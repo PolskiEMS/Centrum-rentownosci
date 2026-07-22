@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, BarChart3, Eye, EyeOff, LockKeyhole, Mail, ShieldCheck, UserRound } from "lucide-react";
+import { ArrowLeft, ArrowRight, BarChart3, Eye, EyeOff, LockKeyhole, Mail, ShieldCheck, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "../../lib/supabase/client";
 
@@ -16,6 +16,11 @@ export default function AuthPanel() {
   const [loading, setLoading] = useState(false);
 
   const isRegister = mode === "register";
+
+  function switchToLogin() {
+    setMode("login");
+    setMessage("");
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -72,7 +77,7 @@ export default function AuthPanel() {
       <section className="auth-card-wrap">
         <div className="auth-card">
           <div className="auth-tabs" role="tablist">
-            <button className={mode === "login" ? "active" : ""} onClick={() => { setMode("login"); setMessage(""); }} type="button">Logowanie</button>
+            <button className={mode === "login" ? "active" : ""} onClick={switchToLogin} type="button">Logowanie</button>
             <button className={mode === "register" ? "active" : ""} onClick={() => { setMode("register"); setMessage(""); }} type="button">Rejestracja</button>
           </div>
 
@@ -109,6 +114,13 @@ export default function AuthPanel() {
               <span>{loading ? "Proszę czekać..." : isRegister ? "Utwórz konto" : "Zaloguj się"}</span>
               {!loading && <ArrowRight size={18} />}
             </button>
+
+            {isRegister && (
+              <button className="auth-back" type="button" onClick={switchToLogin}>
+                <ArrowLeft size={18} />
+                <span>Wróć do logowania</span>
+              </button>
+            )}
           </form>
 
           <p className="auth-note">Tworząc konto, akceptujesz przyszły regulamin i politykę prywatności platformy.</p>
